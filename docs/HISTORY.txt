@@ -1,0 +1,10 @@
+Changelog
+=========
+0.2.3b1
+-----------------------
+*added checks for JS debugging, CacheSetup installed, CacheFu enabled, and use of campus login_form
+
+0.1.7
+-----------------------
+*made it so requirements can be conditionally used
+

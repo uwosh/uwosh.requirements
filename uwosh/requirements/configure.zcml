@@ -1,0 +1,11 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    i18n_domain="uwosh.requirements">
+
+	<include package="plone.browserlayer" />
+	<include file="profiles.zcml" />
+	<include package=".browser" />
+	<include package=".configlet" />
+
+</configure>

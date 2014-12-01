@@ -1,0 +1,87 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/prefs_main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+
+<div metal:fill-slot="prefs_configlet_main">
+
+    <h1 class="documentFirstHeading"
+        i18n:translate="title_manage_contentrules">UW Oshkosh Requirements</h1>
+
+    <a href=""
+       class="link-parent"
+       tal:attributes="href string:$portal_url/plone_control_panel"
+       i18n:translate="label_up_to_plone_setup">
+    Up to Site Setup
+    </a>
+    
+	<form class="inlineDisplay" method="POST" tal:attributes="action string:${context/absolute_url}/@@uwosh-requirements">
+		<div id="goLiveWithSite">
+			
+			<ul class="checks">
+				<tal:checks tal:repeat="check view/checks">
+					<li tal:define="passed check/passes">
+						<span tal:replace="check/name" /> | 
+						<tal:con tal:condition="passed">
+							<b style="color:green">
+								<span tal:replace="python: passed and 'done' or 'not done'" />
+							</b>
+						</tal:con>
+						<tal:con tal:condition="python: not passed">
+							<span tal:replace="structure check/fixinginfo" /> | 
+							<b style="color:red">
+								<span tal:replace="python: passed and 'done' or 'not done'" />
+							</b>
+						</tal:con>
+					</li>
+				</tal:checks>
+			</ul>
+			
+			<tal:reqmet tal:condition="python: view.requirements_met() and not view.is_live()">
+			
+				<p id="todo">
+					In addition, please submit your site url and site map to google.  See <a href="http://www.uwosh.edu/ploneprojects/documentation/how-tos/how-to-improve-your-sites-google-page-rank" >How to improve your site's Google page rank</a>.
+				</p>
+			
+				<div class="field error" tal:condition="python: len(view.errormsg) > 0">
+					<label for="form.plone-projects-url">Plone Project URL</label>
+	                <div class="formHelp">
+	                    Please enter the url to the plone project for this site.  See <a href="http://www.uwosh.edu/ploneprojects/plone-projects" target="_blank">Plone Projects</a> for information.
+	                </div>
+	                <input style="width:200px" id="form.plone-projects-url" type="text" width="200" name="form.plone-projects-url" />
+					<p tal:content="view/errormsg" />
+				</div>
+				<div class="field" tal:condition="python: len(view.errormsg) == 0">
+	                <label for="form.plone-projects-url">Plone Project URL</label>
+	                <div class="formHelp">
+	                    Please enter the url to the plone project for this site.  See <a href="http://www.uwosh.edu/ploneprojects/plone-projects" target="_blank">Plone Projects</a> for information.
+	                </div>
+	                <input style="width:200px" id="form.plone-projects-url" type="text" width="200" name="form.plone-projects-url" />
+	            </div>
+	         	<input 
+					class="context golive" 
+					type="submit" 
+					value="Ready To Go Live" 
+					name="form.button.GoLive"
+					tal:attributes="disabled python: not view.requirements_met()"/>
+				
+			</tal:reqmet>
+			<tal:reqnotmet tal:condition="python: not view.requirements_met() and not view.is_live()">
+				<p id="todo">
+					<b style="color:red">You cannot submit this site is ready to go live until you fix remaining issues.</b>
+				</p>
+			</tal:reqnotmet>
+			
+			<tal:islive tal:condition="python: view.is_live()">
+				<p id="todo">
+					<b style="color:red">The site has already been set to go live.</b>
+				</p>
+			</tal:islive>
+		</div>
+    </form>
+</div>
+</body>
+</html>
+

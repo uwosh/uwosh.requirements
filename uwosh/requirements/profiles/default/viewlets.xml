@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<object>
+	<order manager="plone.portaltop" skinname="Plone Default">
+    	<viewlet name="uwosh.allowedlive" insert-before="uwosh.theme.base.banner" />
+  	</order>
+</object>

@@ -1,0 +1,21 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="uwosh.requirements">
+
+	<browser:viewlet
+        name="uwosh.allowedlive"
+        manager="plone.app.layout.viewlets.interfaces.IPortalTop"
+        class=".allowedlive.AllowedLive"
+		layer="uwosh.requirements.interfaces.IUWOshRequirementsLayer"
+        permission="zope2.View" />
+        
+	<browser:resource
+        name="uwosh.requirements.css"
+		file="requirements.css"
+        />
+	<browser:resource
+        name="uwosh-requirements-config.png"
+		file="process-stop.png"
+        />
+</configure>

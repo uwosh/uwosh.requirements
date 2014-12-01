@@ -1,0 +1,13 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser">
+
+	<browser:page
+	  	for="*"
+	  	name="uwosh-requirements"
+	  	class=".configlet.UWOshRequirementsConfiglet"
+		permission="cmf.ManagePortal"
+		layer="uwosh.requirements.interfaces.IUWOshRequirementsLayer"
+	  />
+	
+</configure>

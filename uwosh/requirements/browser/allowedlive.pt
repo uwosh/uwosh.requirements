@@ -1,0 +1,17 @@
+<div id="requirementsWarning" tal:condition="view/shoulddisplay">
+	<dl class="portalMessage warning" >
+	<dt>Warning</dt>
+	<dd>
+		<br /><br />
+		<ul>
+		<tal:checks tal:repeat="check view/failed_checks">
+			<li>
+				<b><span tal:content="check/name" /></b> | 
+				<span tal:content="structure check/description" /> |
+				<span tal:content="structure check/fixinginfo" />
+			</li>
+		</tal:checks>
+		</ul>
+	</dd>
+	</dl>
+</div>

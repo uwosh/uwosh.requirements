@@ -1,0 +1,100 @@
+uwosh.requirements.browser DOC TESTS
+===============================
+
+this will demonstrate how notifications are supposed to be handled
+
+	>>> from Products.Five.testbrowser import Browser
+	>>> from uwosh.default.tests.mocks import MockMailHost
+	
+	>>> self.portal.MailHost = MockMailHost()
+	>>> browser = Browser()
+	>>> portal_url = self.portal.absolute_url()
+	
+The following is useful when writing and debugging testbrowser tests. It lets
+us see error messages properly.
+
+    >>> browser.handleErrors = False
+    >>> self.portal.error_log._ignored_exceptions = ()
+	
+	
+log in...
+
+	>>> browser.open(portal_url)
+	>>> from Products.PloneTestCase.setup import portal_owner, default_password
+    >>> browser.getControl(name='__ac_name').value = portal_owner
+    >>> browser.getControl(name='__ac_password').value = default_password
+    >>> browser.getControl(name='submit').click()
+
+	>>> "You are now logged in" in browser.contents
+	True
+	
+Should give you 3 warnings with a default install...
+	
+	>>> "<dt>Warning</dt>" in browser.contents
+	True
+	>>> "Must set site from address in Mail Settings" in browser.contents
+	True
+	>>> "Notify uwosh staff you are ready to go live" in browser.contents
+	True
+	
+Should show warnings
+	
+	>>> browser.getLink('uwosh requirements').click()
+	>>> "Go to <a href=\"@@mail-controlpanel\">Mail Settings</a> and set the required information |" in browser.contents
+	True
+	>>> "You cannot submit this site is ready to go live until you fix remaining issues." in browser.contents
+	True
+	
+Should have link to go to mail control panel... Fill in missing settings
+	
+	>>> browser.getLink('Mail Settings').click()
+	>>> "Mail settings for this site." in browser.contents
+	True
+
+Submit form and warning should no long appear	
+
+	>>> browser.getControl(name='form.email_from_address').value = "vangheem@gmail.com"
+	>>> browser.getControl(name="form.actions.save").click()
+	>>> "Must set site from address in Mail Settings" in browser.contents
+	False
+	
+Should have link to site settings
+	
+	>>> browser.getLink('site settings').click()
+	>>> "Site-wide settings." in browser.contents
+	True
+	
+Set description and then submit...  Warning should no longer appear
+	
+	>>> browser.getControl(name='form.site_description').value = "Something about this site"
+	>>> browser.getControl(name="form.actions.save").click()
+	>>> "Must set site from address in Mail Settings" in browser.contents
+	False
+	
+Should have link to uwosh requirements control panel
+	
+	>>> browser.getLink('uwosh requirements').click()
+	>>> "Plone Project URL" in browser.contents
+	True
+	>>> browser.getControl(name="form.button.GoLive").value
+	'Ready To Go Live'
+
+	>>> browser.getControl(name="form.button.GoLive").click()
+	
+Since we did not enter in a plone project url, it should display error
+	>>> "Must enter plone project url" in browser.contents
+	True
+	>>> browser.getControl(name="form.plone-projects-url").value = "http://someurl"
+	>>> browser.getControl(name="form.button.GoLive").click()
+	
+	>>> len(self.portal.MailHost.messages)
+	1	
+	
+	>>> "http://someurl" in self.portal.MailHost.messages[0]['message']
+	True
+	
+	>>> browser.open(portal_url + "/@@uwosh-requirements")
+	>>> "The site has already been set to go live" in browser.contents
+	True
+	>>> "Warning" not in browser.contents
+	True

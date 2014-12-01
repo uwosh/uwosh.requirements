@@ -1,0 +1,4 @@
+<layers>
+    <layer name="uwosh.requirements" 
+           interface="uwosh.requirements.interfaces.IUWOshRequirementsLayer" />
+</layers>

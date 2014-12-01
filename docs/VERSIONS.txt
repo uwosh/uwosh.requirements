@@ -1,0 +1,6 @@
+This document is used to track which version of this product
+dependencies are used.
+
+0.1.7
+---------------------
+uwosh.core>=0.2

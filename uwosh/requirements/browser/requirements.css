@@ -1,0 +1,39 @@
+div#requirementsWarning{
+    padding: 0px 10px 0px 10px;
+}
+div#requirementsWarning dl dd ul li{
+    margin-left:15px;
+}
+
+div#goLiveWithSite{
+    background-color:#FFDD77;
+    border: 1px solid #DD8800;
+    padding:10px;
+}
+div#goLiveWithSite input.golive{
+    margin: auto;
+    text-align: center;
+    background-color: white;
+}
+div#goLiveWithSite input.golive:hover{
+    background-color:#DD8800;
+    border-color:#FFDD77;
+    color: white;
+}
+
+div#goLiveWithSite p#todo{
+    font-size:13px;
+    border: 1px solid black;
+    padding:5px;
+    background-color:white;
+    margin-bottom:5px;
+    width:95%;
+}
+
+div#goLiveWithSite p{
+    margin:0px;
+}
+
+div#goLiveWithSite div.error{
+    margin-top:5px;
+}
